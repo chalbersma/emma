@@ -12,24 +12,41 @@ class emmerGUI:
 		self.upfromme=master
 
 		# Create Frame
-		frame = Frame(master)
-		frame.grid(column=0, row=0)
 
-		tabs = Notebook(frame)
+		#  -------------
+		#  NAV | QUERY
+		#  -------------
+		#  DBs | RESULTS
+		#  -------------
 
-		# Adding Content Frames
-		self.cmframe = LabelFrame(text="Current Market")
-		self.histframe = LabelFrame(text="Historical Data")
-		self.pressframe = LabelFrame(frame, text="Market Pressure")
-		self.orderframe = LabelFrame(frame, text="Orders")
-		self.fundsframe = LabelFrame(frame, text="Funds")
+		navigationFrame = Frame(master)
+		queryFrame = Frame(master)
+		databaseFrame = Frame(master)
+		resultsFrame = Frame(master)
+		navigationFrame.grid(column=0, row=0)
+		queryFrame.grid(column=1, row=0)
+		databaseFrame.grid(column=0, row=1)
+		resultsFrame.grid(column=1, row=1)
 
-		tabs.add(self.cmframe, text="Current Market")
-		tabs.add(self.histframe, text="Historical Data")
-		tabs.add(self.orderframe, text="Orders")
-		tabs.add(self.pressframe, text="Market Pressure")
-		tabs.add(self.fundsframe, text="Funds")
-		tabs.grid(row=0, column=0)
+		# Default UI Elements
+		## Navigation Tree
+		self.navigationTitle = Label(navigationFrame, text="Navigation")
+		self.navigationTitle.pack()
+		self.navigationTree = Treeview(navigationFrame)
+		self.navigationTree.pack()
+		self.navigationTree_vertscroll = Scrollbar(navigationFrame, orient="vertical", command=self.navigationTree.yview)
+		self.navigationTree_vertscroll.pack()
+
+		self.navigationTree_horzscroll = Scrollbar(navigationFrame, orient='horizontal', command=self.navigationTree.xview)
+		self.navigationTree_horzscroll.pack()
+
+		self.navigationTree_RootElement = self.navigationTree.insert('', 'end', text="Database", open=True)
+		
+		## Query Text Box
+		self.queryTitle = Label(navigationFrame, text="Query")
+		self.queryTextBox = Entry(queryFrame)
+		self.queryTitle.pack()
+		self.queryTextBox.pack()
 
 	        #Menu
 		self.menu = Menu(master)
